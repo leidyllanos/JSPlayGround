@@ -1,6 +1,6 @@
-//Function constructor with capital leter
-
-/*var Person = function(name, yearOfBirth, job) {
+//*******************Function constructor with capital leter**************
+/*
+var Person = function(name, yearOfBirth, job) {
     this.name = name;
     this.yearOfBirth = yearOfBirth;
     this.job = job;
@@ -22,10 +22,9 @@ Mark.calculateAge();
 
 console.log(John.lastName);
 console.log(Jane.lastName);
-console.log(Mark.lastName);*/
+console.log(Mark.lastName);
 
-//Object.create
-/*
+/*******************Object.create*************************
 var personProto = {
     calculateAge: function() {
         console.log(2016 - this.yearOfBirth);
@@ -44,8 +43,7 @@ var Jane = Object.create(personProto,
     job: {value: 'designer'}
 })
 */
-//Primitives vs objects
-/*
+/**********Primitives vs objects*******************
 // Primitives
 
 var a = 23;
@@ -96,7 +94,7 @@ function arrayCalc(arr, fn) {
 }
 
 function calculateAge(el) {
-    return 2016 - el;
+    return 2018 - el;
 }
 
 function isFullAges(el) {
@@ -111,6 +109,7 @@ function maxHeartRate(el) {
     }
 }
 
+console.log(years);
 var ages = arrayCalc(years, calculateAge);
 var fullAges = arrayCalc(ages, isFullAges);
 var heartReate = arrayCalc(ages, maxHeartRate);
@@ -118,9 +117,7 @@ console.log(ages);
 console.log(fullAges);
 console.log(heartReate);
 */
-
-// Functions returning functions
-
+/************** Functions returning functions*********************
 function interviewQuestion(job) {
     if (job === 'designer') {
         return function(name) {
@@ -149,3 +146,174 @@ interviewQuestion('teacher')('Carlos');
 interviewQuestion('designer')('Andres');
 interviewQuestion('Abogado')('María');
 
+
+function game() {
+    var score = Math.random() * 10;
+    console.log(score >= 5);    
+}
+
+game();
+
+ (function () {
+    var score = Math.random() * 10;
+    console.log(score >= 5);  
+ })();
+
+ //console.log(score);
+
+ (function (goodLuck) {
+    var score = Math.random() * 10;
+    console.log(score >= 5 - goodLuck);  
+ })(); */
+
+/*************Clousures ******************
+
+ function retirement(retirementAge) {
+     var a = 'Years left until retirement.';
+     return function(yearOfBirth) {
+         var age = 2016 -yearOfBirth;
+         console.log((retirementAge - age) + ' ' + a);         
+     }
+ }
+
+ var retirementUS = retirement(66);
+ var retirementGermany = retirement(65);
+ var retirementIceland = retirement(67);
+
+ retirementUS(1990);
+ retirementGermany(1990);
+ retirementIceland(1990);
+ 
+
+ function interviewQuestion(job) {
+     return function(name) {
+         if (job === 'designer') {
+            console.log(name + ', can you please explain what UX design is?');
+         } else if (job === 'teacher') {
+            console.log('What subject do you teach ' + name + '?');
+         } else {
+            console.log('Hello ' + name + ', what do you do?');
+         }
+     }
+ }
+
+interviewQuestion('designer')('Lau'); */
+
+/******************Bind, call and apply ************** 
+
+var john = {
+    name: 'John',
+    age: 26,
+    job: 'Engineer',
+    presentation: function(style, timeOfDay) {
+        if (style === 'formal') {
+            console.log('Good ' + timeOfDay + ' Ladies and gentlement! I\'m ' + this.name +
+            ', I\'m a ' + this.job + ' and I\'m ' + this.age + ' years old.' );
+        } else if(style === 'friendly'){
+            console.log('Hey! what\'s up? I\'m '+ this.name + ', I\'m a ' +  this.job +
+            ' and I\'m  ' + this.age + ' years old. Have a nice ' + timeOfDay + '.');
+        }
+    }
+}
+
+var emily = {
+    name: 'Emily',
+    age: 30, 
+    job: 'Designer'
+};
+john.presentation('formal', 'morning');
+john.presentation.call(emily, 'friendly', 'afternoon');
+
+var johnFriendly = john.presentation.bind(john, 'friendly');
+johnFriendly('morning');
+johnFriendly('nigth');
+
+var emilyFormal = john.presentation.bind(emily, 'formal');
+emilyFormal('afernoon');
+
+var years = [1990, 1965, 1937, 2005, 1998];
+
+function arrayCalc(arr, fn) {
+    var arrRes = [];
+
+    for (var i = 0; i < arr.length; i++) {
+        arrRes.push(fn(arr[i]));        
+    }
+    return arrRes;
+}
+
+function calculateAge(el) {
+    return 2016 - el;
+}
+
+function isFullAges(limit, el) {
+    return el >= limit;
+}
+
+var ages = arrayCalc(years, calculateAge);
+var fullJapan = arrayCalc(ages, isFullAges.bind(this, 20));
+console.log(ages);
+console.log(fullJapan);
+*/
+
+/**************Quiz challenge**************** */
+
+//To make private code and it doesn't interfere with  other programers code
+//use : (function () {})(); estructure
+
+(function() {
+  function Question(question, answer, correct) {
+    this.question = question;
+    this.answer = answer;
+    this.correct = correct;
+  }
+
+  Question.prototype.displayQuestion = function() {
+    console.log(this.question);
+
+    for (var i = 0; i < this.answer.length; i++) {
+      console.log(i + ":" + this.answer[i]);
+    }
+  };
+
+  var trak = 0;
+  Question.prototype.checkAnswer = function(ans) {
+    if (ans === this.correct && ans !== null) {
+      trak = trak + 1;
+      console.log("Correct answer, you have matched " + trak);
+    } else {
+      console.log("Wrong answer. Try again");
+    }
+  };
+
+  var q1 = new Question(
+    "Is JavaScript the coolest programing language in the world?",
+    ["Yes", "No"],
+    0
+  );
+  var q2 = new Question(
+    "What is the name of this course's teacher?",
+    ["John", "Michael", "Jonas"],
+    2
+  );
+  var q3 = new Question(
+    "What does best describe coding?",
+    ["Boring", "Hard", "Fun", "Tedious"],
+    2
+  );
+
+  var questions = [q1, q2, q3];
+
+  function nextQuestion() {
+    var number = Math.floor(Math.random() * questions.length);
+    questions[number].displayQuestion();
+
+    var choose = prompt("Choose the correct answer ");
+
+    if (choose !== "exit") {
+      questions[number].checkAnswer(parseInt(choose));
+      nextQuestion();
+    }
+  }
+  nextQuestion();
+})();
