@@ -268,34 +268,18 @@ console.log(fullJapan);
     this.correct = correct;
   }
 
-  Question.prototype.displayQuestion = function() {
-    console.log(this.question);
-
-    for (var i = 0; i < this.answer.length; i++) {
-      console.log(i + ":" + this.answer[i]);
-    }
-  };
-
-  var trak = 0;
-  Question.prototype.checkAnswer = function(ans) {
-    if (ans === this.correct && ans !== null) {
-      trak = trak + 1;
-      console.log("Correct answer, you have matched " + trak);
-    } else {
-      console.log("Wrong answer. Try again");
-    }
-  };
-
   var q1 = new Question(
     "Is JavaScript the coolest programing language in the world?",
     ["Yes", "No"],
     0
   );
+
   var q2 = new Question(
     "What is the name of this course's teacher?",
     ["John", "Michael", "Jonas"],
     2
   );
+
   var q3 = new Question(
     "What does best describe coding?",
     ["Boring", "Hard", "Fun", "Tedious"],
@@ -304,6 +288,43 @@ console.log(fullJapan);
 
   var questions = [q1, q2, q3];
 
+  Question.prototype.displayQuestion = function() {
+    console.log(this.question);
+
+    for (var i = 0; i < this.answer.length; i++) {
+      console.log(i + ": " + this.answer[i]);
+    }
+  };
+
+  Question.prototype.checkAnswer = function(ans, callback) {
+    var sc;
+    if (ans === this.correct) {
+      console.log("Correct answer!");
+      sc = callback(true);
+    } else {
+      console.log("Wrong answer. Try again");
+      sc = callback(false);
+    }
+    this.displayScore(sc);
+  };
+
+  Question.prototype.displayScore = function(score) {
+    console.log("Your currentscore is:" + score);
+    console.log("_______________________________");
+  };
+
+  function score() {
+    var sc = 0;
+    return function(correct) {
+      if (correct) {
+        sc++;
+      }
+      return sc;
+    };
+  }
+
+  var keepScore = score();
+
   function nextQuestion() {
     var number = Math.floor(Math.random() * questions.length);
     questions[number].displayQuestion();
@@ -311,7 +332,7 @@ console.log(fullJapan);
     var choose = prompt("Choose the correct answer ");
 
     if (choose !== "exit") {
-      questions[number].checkAnswer(parseInt(choose));
+      questions[number].checkAnswer(parseInt(choose), keepScore);
       nextQuestion();
     }
   }
