@@ -1,15 +1,15 @@
-//Budget controller no sabe de la existencia de ningun otro módulo
+//Budget controller 
 var budgetController = (function() {
 
 
 })();
 
-//UI controller no sabe de la existencia de ni gun otro módulo
+//UI controller 
 var UIController = (function() {
 
 })();  
 
-//Global app controller comunica los dos módulos aneriores para poder mmostrar salidas
+//Global app controller 
 var controller = (function(budgetCtrl, UICtrl) {
 
 })(budgetController, UIController);
