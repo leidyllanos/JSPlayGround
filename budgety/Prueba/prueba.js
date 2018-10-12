@@ -28,8 +28,17 @@ var UIController = (function() {
 
 //Este modulo comunica los dos módulos aneriores para poder mmostrar salidas
 var controller = (function(calCtrl, UICtrl) {
-    
-    var DOM = UICtrl.getDOMstrings();
+
+    var setupEventListeners = function() {
+        var DOM = UICtrl.getDOMstrings();
+        document.querySelector(DOM.inputBtn).addEventListener("click", ctrlAddItem);
+
+        document.addEventListener("keypress", function(event) {
+            if (event.keyCode === 13 || event.which === 13) {
+            ctrlAddItem();
+            }
+        });
+    };
 
     var ctrlAddItem = function() {
         //1. get the field input data
@@ -40,13 +49,6 @@ var controller = (function(calCtrl, UICtrl) {
         //3. add the answer to the UI
         //4. calculate the answer
        
-    }
+    };
 
-    document.querySelector(DOM.inputBtn).addEventListener("click", ctrlAddItem);
-
-    document.addEventListener("keypress", function(event) {
-        if (event.keyCode === 13 || event.which === 13) {
-         ctrlAddItem();
-        }
-    });
 })(calController, UIController);
