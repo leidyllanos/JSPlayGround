@@ -16,11 +16,11 @@ var controller = (function(calCtrl, UICtrl) {
         //2. add the numbers to the budget controller
         //3. add the answer to the UI
         //4. calculate the answer
+
+        console.log("It works");        
     }
 
-    document.querySelector(".add").addEventListener("click", function() {
-        ctrlAddItem();
-    });
+    document.querySelector(".add").addEventListener("click", ctrlAddItem);
 
     document.addEventListener("keypress", function(event) {
         if (event.keyCode === 13 || event.which === 13) {
