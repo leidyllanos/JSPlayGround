@@ -22,6 +22,18 @@ var budgetController = (function() {
       exp: [],
       inc: []
     }
+  };
+
+  return {
+    addItem: function(type, des, val) {
+      var newItem;
+
+      if (type === 'exp') {
+        newItem = new Expense(ID, des, val);
+      } else if (type === 'inc') {
+        newItem = new Income(ID, des, val);
+      }
+    }
   }
 
 })();
@@ -39,7 +51,7 @@ var UIController = (function() {
   return {
     getInput: function() {
       return {
-        type: document.querySelector(DOMstrings.inputType).value,
+        type: document.querySelector(DOMstrings.inputType).value, //will be get inc or exp
         description: document.querySelector(DOMstrings.inputDescription).value,
         value: document.querySelector(DOMstrings.inputValue).value
       };
