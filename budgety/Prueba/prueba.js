@@ -5,6 +5,14 @@ var calController = (function() {
 
 //Este modulo no sabe de la existencia de ningun otro módulo
 var UIController = (function() {
+
+    return {
+        getInput: function() {
+            return {
+                add: document.querySelector('.add').value
+            };
+        }
+    };
     
 })();
 
@@ -13,11 +21,13 @@ var controller = (function(calCtrl, UICtrl) {
     
     var ctrlAddItem = function() {
         //1. get the field input data
+        var input = UICtrl.getInput();
+        console.log(input);
+        
         //2. add the numbers to the budget controller
         //3. add the answer to the UI
         //4. calculate the answer
-
-        console.log("It works");        
+       
     }
 
     document.querySelector(".add").addEventListener("click", ctrlAddItem);
