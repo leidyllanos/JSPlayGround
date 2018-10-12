@@ -5,12 +5,22 @@ var calController = (function() {
 
 //Este modulo no sabe de la existencia de ningun otro módulo
 var UIController = (function() {
+    
+    var DOMstrings = {
+        inputNum: '.add__num1',
+        inputNum2: '.add__num2',
+        inputBtn: '.add'
+    }
 
     return {
         getInput: function() {
             return {
-                add: document.querySelector('.add').value
+                num1: document.querySelector(DOMstrings.inputNum).value,
+                num2: document.querySelector(DOMstrings.inputNum2).value
             };
+        },
+        getDOMstrings: function() {
+            return DOMstrings;
         }
     };
     
@@ -19,6 +29,8 @@ var UIController = (function() {
 //Este modulo comunica los dos módulos aneriores para poder mmostrar salidas
 var controller = (function(calCtrl, UICtrl) {
     
+    var DOM = UICtrl.getDOMstrings();
+
     var ctrlAddItem = function() {
         //1. get the field input data
         var input = UICtrl.getInput();
@@ -30,7 +42,7 @@ var controller = (function(calCtrl, UICtrl) {
        
     }
 
-    document.querySelector(".add").addEventListener("click", ctrlAddItem);
+    document.querySelector(DOM.inputBtn).addEventListener("click", ctrlAddItem);
 
     document.addEventListener("keypress", function(event) {
         if (event.keyCode === 13 || event.which === 13) {
