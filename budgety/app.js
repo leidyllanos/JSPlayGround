@@ -1,6 +1,6 @@
 //Budget controller
 var budgetController = (function() {
-  
+
 })();
 
 //UI controller
@@ -45,7 +45,6 @@ var controller = (function(budgetCtrl, UICtrl) {
   var ctrAddITem = function() {
     //1. get the field input data
     var input = UICtrl.getInput();
-    console.log(input);
 
     //2. add the item to the budget controller
     //3. add the item to the UI
@@ -53,4 +52,13 @@ var controller = (function(budgetCtrl, UICtrl) {
     //5. display the budget on the UI
   };
 
+  return {
+    init: function() {
+      console.log("App has started.");
+      setupEventListeners();
+    }
+  };
+
 })(budgetController, UIController);
+
+controller.init();
