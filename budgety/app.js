@@ -11,6 +11,14 @@ var budgetController = (function() {
     this.description = description;
     this.value = value;
   };
+  
+  var calculateTotal = function(type) {
+    var sum = 0;
+    data.allItems[type].forEach(function(cur){
+      sum += cur.value;
+    });
+    data.totals[type] = sum;
+  }; 
 
   var data = {
     allItems: {
@@ -18,8 +26,8 @@ var budgetController = (function() {
       inc: []
     },
     totals: {
-      exp: [],
-      inc: []
+      exp: 0,
+      inc: 0
     }
   };
 
@@ -46,6 +54,13 @@ var budgetController = (function() {
 
       //Return the new element
       return newItem;
+    },
+
+    calculateBudget: function() {
+
+      //calculate total income and expenses
+      calculateTotal("exp");
+      calculateTotal("inc");
     },
 
     testing: function() {
